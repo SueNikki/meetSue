@@ -1,0 +1,11 @@
+.site-layout-background {
+  background: #fff;
+}
+
+.app .logo img {
+  height: 70px;
+}
+
+:global .ant-layout-header{
+  background: #fff;
+}
