@@ -2,14 +2,9 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import React from 'react';
-import './style.css';
+import './style.less';
 
 const { Header, Content, Sider } = Layout;
-
-const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-  key,
-  label: `nav ${key}`,
-}));
 
 const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
   (icon, index) => {
@@ -33,11 +28,16 @@ const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOu
 
 const App: React.FC = () => (
   <Layout className='app'>
-    <Header className="header">
-      <div className="logo">
+    <Header className="app-header">
+      <div className="app-logo">
         <img src={require('../../assets/logo.png')} alt="logo" />
+        <span>遇见meeting</span>
+        <div className='app-user'>
+          <div className='app-avatar'></div>
+          <span className='app-nickName'>nikki</span>
+          <span className='app-nickName'>退出</span>
+        </div>
       </div>
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
     </Header>
     <Layout>
       <Sider width={200} className="site-layout-background">
