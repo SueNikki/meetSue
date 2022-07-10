@@ -1,73 +1,64 @@
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Blog from '../Blog';
+import Home from '../Home';
 import './style.less';
 
-const { Header, Content, Sider } = Layout;
+const App: React.FC = () => {
+  const { Header, Content, Sider } = Layout;
 
-const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1);
+  const menuData = [
+    { label: '首页', key: '/home' },
+    { label: 'bolg', key: '/blog' },
+  ];
 
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
+  let navigate = useNavigate();
 
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
-  },
-);
-
-const App: React.FC = () => (
-  <Layout className='app'>
-    <Header className="app-header">
-      <div className="app-logo">
-        <img src={require('../../assets/logo.png')} alt="logo" />
-        <span>遇见meeting</span>
-        <div className='app-user'>
-          <div className='app-avatar'></div>
-          <span className='app-nickName'>nikki</span>
-          <span className='app-nickName'>退出</span>
+  return (
+    <Layout className='app'>
+      <Header className="app-header">
+        <div className="app-logo">
+          <img src={require('../../assets/logo.png')} alt="logo" />
+          <span>遇见meeting</span>
+          <div className='app-user'>
+            <div className='app-avatar'></div>
+            <span className='app-nickName'>nikki</span>
+            <span className='app-nickName'>退出</span>
+          </div>
         </div>
-      </div>
-    </Header>
-    <Layout>
-      <Sider width={200} className="site-layout-background">
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          style={{ height: '100%', borderRight: 0 }}
-          items={items2}
-        />
-      </Sider>
-      <Layout style={{ padding: '0 24px 24px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-            minHeight: 280,
-          }}
-        >
-          Content
-        </Content>
+      </Header>
+      <Layout>
+        <Sider width={200} className="app-layout">
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            style={{ height: '100%', borderRight: 0 }}
+            items={menuData}
+            onClick={(item: any) => {
+              navigate(`${item.key}`);
+            }}
+          />
+        </Sider>
+        <Layout style={{ background: '#fafafa' }}>
+          <Content
+            className="app-content"
+            style={{
+              margin: 0,
+              minHeight: 280,
+            }}
+          >
+            <Routes>
+              <Route path="/Home" element={<Home />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
-  </Layout>
-);
+  )
+}
 
 export default App;
